@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- es5 -->
+    <!-- <script src="//cdn.bootcss.com/react/0.13.3/react.js"></script> -->
+    <!-- <script src="//cdn.bootcss.com/react/0.13.3/JSXTransformer.js"></script> -->
+    <!-- es6中react将react-dom单独剥离出来,所以需要单独加载react-dom,这里注意:如果babel-core的版本不匹配可能会在浏览器中报错提示缺少key值 -->
+    <script src="//cdn.bootcss.com/react/15.3.2/react.min.js"></script>
+    <script src="//cdn.bootcss.com/react/15.3.2/react-dom.min.js"></script>
+    <script src="//cdn.bootcss.com/babel-core/5.8.34/browser.min.js"></script>
+</head>
+<body>
+
+    <div id="container"></div>
+
+<script type="text/babel">
+    /* es6 */
+    class TestClickComponent extends React.Component{
+        constructor(props){
+            super(props);
+            this.state = {}
+            this.handleClick = this.handleClick.bind(this)
+        }
+
+        handleClick(){
+            const tip = this.refs.tip;
+
+            if (tip.style.display === 'none'){
+                tip.style.display = 'inline'
+            }else{
+                tip.style.display = 'none'
+            }
+        }
+
+        render() {
+            return (
+                <div>
+                    <button onClick={this.handleClick}>显示|隐藏</button><span ref="tip">点击测试</span>
+                </div>
+            )
+        }
+    }
+
+    class TestInputComponent extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                inputContent:''
+            };
+            this.changeHandle = this.changeHandle.bind(this)
+        }
+
+        changeHandle(){
+            this.setState({
+                inputContent:event.target.value
+            });
+            console.log(event.target.value)
+        }
+
+        render(){
+            return(
+                <div>
+                    <input type="text" onChange={this.changeHandle} /><span>{this.state.inputContent}</span>
+                </div>
+            )
+
+        }
+    }
+
+    ReactDOM.render(<div><TestClickComponent /><TestInputComponent /></div>,document.getElementById('container'));
+
+    /* es5 */
+//        var TestClickComponent = React.createClass({
+//        render: function () {
+//            return(
+//                <div>
+//                    <button>显示|隐藏</button><span>点击测试</span>
+//                </div>
+//            )
+//        }
+//    })
+//
+//    var TestInputComponent = React.createClass({
+//        getInitialState: function () {
+//            return{
+//                inputContent:''
+//            };
+//        },
+//
+//        render: function () {
+//            return(
+//                    <div>
+//                        <input type="text"/><span>{this.state.inputContent}</span>
+//                    </div>
+//            )
+//        }
+//    })
+//
+//    React.render(<div><TestClickComponent /><TestInputComponent /></div>,document.getElementById('container'))
+</script>
+</body>
+</html>
